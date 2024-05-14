@@ -1,4 +1,5 @@
 import {Button} from "@nextui-org/react";
+import { Camera } from "lucide-react";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
       <Button color="primary" variant="shadow">
         Shadow
       </Button>
+       <Camera color="red" size={28} />
     </div>
   );
 }
