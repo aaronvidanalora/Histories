@@ -30,5 +30,5 @@ export default function Carta({ id, titulo, fecha, experiencia, imagen }) {
           </div>
       </CardFooter>
     </Card>
-  );
-};
+  )
+}
