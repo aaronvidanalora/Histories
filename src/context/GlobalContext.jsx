@@ -1,17 +1,19 @@
-/* eslint-disable react/prop-types */
-import  { createContext, useState } from 'react';
+import { useState, useContext, createContext } from "react";
 
-// Crear el context global
-export const GlobalContext = createContext();
+import historiasJSON from '../bd.json'
 
-const GlobalProvider = ({ children }) => {
-  const [historias, setHistorias] = useState([]);
+const GlobalContext = createContext();
 
-  return (
-    <GlobalContext.Provider value={{ historias, setHistorias }}>
-      {children}
-    </GlobalContext.Provider>
-  );
-};
+export const GlobalProvider = ({ children }) => {
+    const [historias, setHistorias] = useState(historiasJSON.historias)
 
-export default GlobalProvider;
+    return (
+        <GlobalContext.Provider value={{ historias, setHistorias }}>
+            {children}
+        </GlobalContext.Provider>
+    )    
+}
+
+export const useGlobalContext = () => {
+    return useContext(GlobalContext);
+}

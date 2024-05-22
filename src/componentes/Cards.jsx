@@ -1,7 +1,11 @@
-import { historias } from "../bd/historias";
+import { useGlobalContext } from "../context/GlobalContext";
 import Carta from "./Card";
 
 const Cards = () => {
+  const { historias } = useGlobalContext();
+
+  
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:pl-32 sm:pr-32 ">
       {historias.map((historia, index) => (
@@ -15,7 +19,7 @@ const Cards = () => {
         />
       ))}
     </div>
-  )
+  );
 }
 
-export default Cards
+export default Cards;
