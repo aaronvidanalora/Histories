@@ -21,6 +21,14 @@ export default function Carta({ id, titulo, fecha, experiencia, comentario, imag
         onOpen();
     }
 
+    function controladorBorrarHistoria(){
+        const borrar = {
+            id
+        }
+        setDataHistoria(borrar);
+        console.log('Borrar historia con id:  ', id)
+    }
+
     return (
         <Card isFooterBlurred className="w-full h-[300px] relative">
             <CardHeader className="absolute z-10 top-1 flex-col items-start">
@@ -41,7 +49,7 @@ export default function Carta({ id, titulo, fecha, experiencia, comentario, imag
                     <Button color="warning" variant="ghost" radius="lg" size="sm" onClick={controladorEditarHistoria}>
                         <Pencil />
                     </Button>
-                    <Button color="danger" variant="ghost" radius="lg" size="sm">
+                    <Button color="danger" variant="ghost" radius="lg" size="sm" onClick={controladorBorrarHistoria}>
                         <Trash2 />
                     </Button>
                 </div>
