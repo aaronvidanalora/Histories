@@ -1,6 +1,6 @@
 import { Button, Checkbox, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, Input } from "@nextui-org/react"; // Importa Input de @nextui-org/react, no de postcss
 import Cards from "./componentes/Cards";
-import { Calendar, Edit2, Link, LockIcon, MailIcon, PlusCircle } from 'lucide-react';
+import { Calendar, CalendarIcon, Edit2, Link, LockIcon, MailIcon, PencilIcon, PlusCircle } from 'lucide-react';
 import { useDisclosure } from "@nextui-org/react";
 
 export default function App() {
@@ -21,60 +21,58 @@ export default function App() {
           <PlusCircle size={45} />
         </button>
       </div>
-      <Button onPress={onOpen} color="primary">Open Modal</Button>
+      
       <Modal 
-        isOpen={isOpen} 
-        onOpenChange={onOpenChange}
-        placement="top-center"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  endContent={
-                    <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Email"
-                  placeholder="Enter your email"
-                  variant="bordered"
-                />
-                <Input
-                  endContent={
-                    <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
-                  variant="bordered"
-                />
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: "text-small",
-                    }}
-                  >
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="#" size="sm">
-                    Forgot password?
-                  </Link>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Sign in
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+  isOpen={isOpen} 
+  onOpenChange={onOpenChange}
+  placement="top-center"
+>
+  <ModalContent>
+    {(onClose) => (
+      <>
+        <ModalHeader className="flex flex-col gap-1">Editar Historia "Historia sin título"</ModalHeader>
+        <ModalBody>
+          <Input
+            autoFocus
+            endContent={
+              <CalendarIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            }
+            label="Fecha"
+            placeholder="Ejemplo: Marzo de 2024"
+            variant="bordered"
+          />
+          <Input
+            endContent={
+              <PencilIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            }
+            label="Título"
+            placeholder="Título de la historia"
+            variant="bordered"
+          />
+          <Textarea
+            label="Experiencia"
+            placeholder="Describe tu experiencia"
+            variant="bordered"
+          />
+          <Textarea
+            label="Comentario"
+            placeholder="Escribe comentarios"
+            variant="bordered"
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" variant="flat" onPress={onClose}>
+            Cerrar
+          </Button>
+          <Button color="success" onPress={onClose}>
+            Editar
+          </Button>
+        </ModalFooter>
+      </>
+    )}
+  </ModalContent>
+</Modal>
+
     </div>
     
   );
