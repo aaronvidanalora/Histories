@@ -29,6 +29,8 @@ export default function Carta({ id, titulo, fecha, experiencia, comentario, imag
         console.log('Borrar historia con id:  ', id)
     }
 
+    
+
     return (
         <Card isFooterBlurred className="w-full h-[300px] relative">
             <CardHeader className="absolute z-10 top-1 flex-col items-start">

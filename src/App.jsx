@@ -8,27 +8,28 @@ import ModalForm from './componentes/ModalForm';
 export default function App() {
     const { isOpen, onOpen, onClose, dataHistoria, setDataHistoria } = useGlobalContext();
 
+    const handleCrearNuevaHistoria = () => {
+        setDataHistoria({
+            fecha: "Ejemplo: Marzo de 2024",
+            titulo: "",
+            experiencia: "",
+            comentario: ""
+        });
+        onOpen(); 
+    };
+
     return (
         <div className="text-center">
             <h1 className="text-4xl font-bold p-6">Mis historias</h1>
-            <div className="flex justify-center items-center"></div>
             <div>
                 <Cards />
             </div>
             <div className="p-10 justify-end flex">
                 <button
                     className="bg-green-700 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-full flex items-center"
-                    onClick={() => {
-                        setDataHistoria({
-                            fecha: "Ejemplo: Marzo de 2024",
-                            titulo: "",
-                            experiencia: "",
-                            comentario: ""
-                        });
-                        onOpen(); 
-                    }} 
+                    onClick={handleCrearNuevaHistoria} 
                 >
-                    <PlusCircle size={45} />
+                                       <PlusCircle size={45} />
                 </button>
             </div>
             <Modal 
@@ -36,8 +37,10 @@ export default function App() {
                 onOpenChange={onClose}
                 placement="top-center"
             >
-                <ModalForm onClose={onClose} setDataHistoria={setDataHistoria} dataHistoria={dataHistoria} />
+                <ModalForm onClose={onClose} setDataHistoria={setDataHistoria} dataHistoria={dataHistoria} isCreating={!dataHistoria?.id} />
             </Modal>
+
         </div>
     );
 }
+

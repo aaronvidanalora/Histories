@@ -2,17 +2,23 @@ import React from 'react';
 import { ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea, Input, Button } from "@nextui-org/react";
 import { CalendarIcon, PencilIcon } from 'lucide-react';
 
-function ModalForm({ onClose, setDataHistoria, dataHistoria }) {
-   
+function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating }) {
+    // Controlador para crear una nueva historia y mostrar sus datos por consola
+    function controladorNuevaHistoria() {
+        console.log('Nueva historia creada:', dataHistoria);
+    }
+
+    // Controlador para actualizar una historia existente
+    function controladorActualizarHistoria() {
+        console.log('Actualizando historia:', dataHistoria);
+    }
+
     function controladorFormHistoria(campo, valor) {
         setDataHistoria(prevState => ({
             ...prevState,
             [campo]: valor
         }));
-        console.log('informacion de las historias', dataHistoria);
-
     }
-
 
     return (
         <ModalContent>
@@ -60,8 +66,9 @@ function ModalForm({ onClose, setDataHistoria, dataHistoria }) {
                 <Button color="danger" variant="flat" onPress={onClose}>
                     Cerrar
                 </Button>
-                <Button color="success" onPress={onClose}>
-                    Editar
+             
+                <Button color={isCreating ? "primary" : "success"} onPress={isCreating ? controladorNuevaHistoria : controladorActualizarHistoria}>
+                    {isCreating ? 'Crear' : 'Actualizar'} Historia
                 </Button>
             </ModalFooter>
         </ModalContent>
