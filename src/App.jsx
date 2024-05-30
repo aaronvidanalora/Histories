@@ -9,7 +9,7 @@ export default function App() {
 
     const handleCrearNuevaHistoria = () => {
         setDataHistoria({
-            fecha: "Ejemplo: Marzo de 2024",
+            fecha: "",
             titulo: "",
             experiencia: "",
             comentario: "",

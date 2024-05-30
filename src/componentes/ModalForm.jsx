@@ -11,7 +11,10 @@ export function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating, 
         await handleNuevaHistoria();
     }
 
-    
+    const controladorActualizarHistoria = async () => {
+        console.log('Actualizando historia:', dataHistoria);
+        await actualizarHistoria(dataHistoria);
+    }
 
     const controladorFormHistoria = (campo, valor) => {
         setDataHistoria(prevState => ({
@@ -38,11 +41,11 @@ export function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating, 
         }
     }
 
-    async function controladorActualizarHistoria(dataHistoria) {
+    async function actualizarHistoria(dataHistoria) {
         console.log(`ID: ${dataHistoria.id}`);
 
         try {
-            const response = await fetch(`hhttps://json-server-tau-blush.vercel.app/historias/${dataHistoria.id}`, {
+            const response = await fetch(`https://json-server-tau-blush.vercel.app/historias/${dataHistoria.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -54,6 +57,7 @@ export function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating, 
                 const data = await response.json();
                 console.log('Información de la historia actualizada:', data);
                 await leerHistorias();
+                onClose();
             } else {
                 console.error('Error al actualizar la historia');
             }
