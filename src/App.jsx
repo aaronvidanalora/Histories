@@ -5,16 +5,17 @@ import { useGlobalContext } from './context/GlobalContext';
 import ModalForm from './componentes/ModalForm';
 
 export default function App() {
-    const { isOpen, onOpen, onClose, dataHistoria, setDataHistoria } = useGlobalContext();
+    const { isOpen, onOpen, onClose, dataHistoria, setDataHistoria, addHistoria } = useGlobalContext();
 
     const handleCrearNuevaHistoria = () => {
         setDataHistoria({
             fecha: "Ejemplo: Marzo de 2024",
             titulo: "",
             experiencia: "",
-            comentario: ""
+            comentario: "",
+            imagen: ""
         });
-        onOpen(); 
+        onOpen();
     };
 
     return (
@@ -28,17 +29,17 @@ export default function App() {
             <div className="fixed bottom-4 right-14">
                 <button
                     className="bg-green-700 hover:bg-green-500 text-white font-bold py-4 px-4 rounded-full flex items-center"
-                    onClick={handleCrearNuevaHistoria} 
+                    onClick={handleCrearNuevaHistoria}
                 >
                     <PlusCircle size={35} />
                 </button>
             </div>
-            <Modal 
-                isOpen={isOpen} 
+            <Modal
+                isOpen={isOpen}
                 onOpenChange={onClose}
                 placement="top-center"
             >
-                <ModalForm onClose={onClose} setDataHistoria={setDataHistoria} dataHistoria={dataHistoria} isCreating={!dataHistoria?.id} />
+                <ModalForm onClose={onClose} setDataHistoria={setDataHistoria} dataHistoria={dataHistoria} isCreating={!dataHistoria?.id} addHistoria={addHistoria} />
             </Modal>
         </div>
     );

@@ -5,7 +5,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useGlobalContext } from "../context/GlobalContext";
 
 export default function Carta({ id, titulo, fecha, experiencia, comentario, imagen }) {
-    const { setDataHistoria, onOpen } = useGlobalContext();
+    const { setDataHistoria, onOpen, setHistorias, historias } = useGlobalContext();
 
     function controladorEditarHistoria() {
         const editar = {
@@ -21,15 +21,21 @@ export default function Carta({ id, titulo, fecha, experiencia, comentario, imag
         onOpen();
     }
 
-    function controladorBorrarHistoria(){
-        const borrar = {
-            id
-        }
-        setDataHistoria(borrar);
-        console.log('Borrar historia con id:  ', id)
-    }
+    async function controladorBorrarHistoria(id) {
+        console.log("Borrar historia con id :", id);
 
-    
+        try {
+            const response = await fetch(`https://json-server-tau-blush.vercel.app/historias/${id}`, { method: 'DELETE' });
+            
+            if (response.ok) {
+                setHistorias(historias.filter(historia => historia.id !== id));
+            } else {
+                console.error('Error al borrar la historia');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
     return (
         <Card isFooterBlurred className="w-full h-[300px] relative">
@@ -51,7 +57,7 @@ export default function Carta({ id, titulo, fecha, experiencia, comentario, imag
                     <Button color="warning" variant="ghost" radius="lg" size="sm" onClick={controladorEditarHistoria}>
                         <Pencil />
                     </Button>
-                    <Button color="danger" variant="ghost" radius="lg" size="sm" onClick={controladorBorrarHistoria}>
+                    <Button color="danger" variant="ghost" radius="lg" size="sm" onClick={() => controladorBorrarHistoria(id)}>
                         <Trash2 />
                     </Button>
                 </div>

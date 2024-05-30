@@ -11,10 +11,9 @@ const Cards = () => {
             const response = await fetch('https://json-server-tau-blush.vercel.app/historias', { method: 'GET' });
             const data = await response.json();
             
-              console.log(data); 
 
             if (Array.isArray(data)) {
-                console.log('historias', data);
+              console.log('historias:', data)  
                 setHistorias(data);
             } else {
                 console.error('Data is not an array:', data)
@@ -39,6 +38,7 @@ const Cards = () => {
           titulo={historia.titulo}
           fecha={historia.fecha}
           experiencia={historia.experiencia}
+          comentario={historia.comentario}
           imagen={historia.imagen}    
         />
       ))}

@@ -1,23 +1,71 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import { ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea, Input, Button } from "@nextui-org/react";
 import { CalendarIcon, PencilIcon } from 'lucide-react';
+import { useGlobalContext } from "../context/GlobalContext";
 
-function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating }) {
-    // Controlador para crear una nueva historia y mostrar sus datos por consola
-    function controladorNuevaHistoria() {
+export function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating, addHistoria }) {
+    const { setHistorias } = useGlobalContext();
+
+    const controladorNuevaHistoria = async () => {
         console.log('Nueva historia creada:', dataHistoria);
+        await handleNuevaHistoria();
     }
 
-    // Controlador para actualizar una historia existente
-    function controladorActualizarHistoria() {
-        console.log('Actualizando historia:', dataHistoria);
-    }
+    
 
-    function controladorFormHistoria(campo, valor) {
+    const controladorFormHistoria = (campo, valor) => {
         setDataHistoria(prevState => ({
             ...prevState,
             [campo]: valor
         }));
+    }
+
+    const leerHistorias = async () => {
+        try {
+            const response = await fetch('https://json-server-tau-blush.vercel.app/historias', { method: 'GET' });
+            const data = await response.json();
+            
+            console.log(data); 
+
+            if (Array.isArray(data)) {
+                console.log('historias', data);
+                setHistorias(data);
+            } else {
+                console.error('Data is not an array:', data)
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
+
+    async function controladorActualizarHistoria(dataHistoria) {
+        console.log(`ID: ${dataHistoria.id}`);
+
+        try {
+            const response = await fetch(`hhttps://json-server-tau-blush.vercel.app/historias/${dataHistoria.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataHistoria)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Información de la historia actualizada:', data);
+                await leerHistorias();
+            } else {
+                console.error('Error al actualizar la historia');
+            }
+        } catch (error) {
+            console.error('Error actualizando la historia:', error);
+        }
+    }
+
+    const handleNuevaHistoria = async () => {
+        await addHistoria();
+        await leerHistorias();
+        onClose();
     }
 
     return (
@@ -61,12 +109,18 @@ function ModalForm({ onClose, setDataHistoria, dataHistoria, isCreating }) {
                     value={dataHistoria?.comentario || ''}
                     onChange={(e) => controladorFormHistoria('comentario', e.target.value)}
                 />
+                <Input
+                    label="Imagen"
+                    placeholder="Url de la imagen"
+                    variant="bordered"
+                    value={dataHistoria?.imagen || ''}
+                    onChange={(e) => controladorFormHistoria('imagen', e.target.value)}
+                />
             </ModalBody>
             <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                     Cerrar
                 </Button>
-             
                 <Button color={isCreating ? "primary" : "success"} onPress={isCreating ? controladorNuevaHistoria : controladorActualizarHistoria}>
                     {isCreating ? 'Crear' : 'Actualizar'} Historia
                 </Button>
